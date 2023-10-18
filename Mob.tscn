@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0vcn11k24kty"]
+
+[ext_resource type="Script" path="res://Mob.gd" id="1_m4xyu"]
+[ext_resource type="Texture2D" uid="uid://dwvl3qbor5k7r" path="res://art/enemyFlyingAlt_1.png" id="2_fjmph"]
+[ext_resource type="Texture2D" uid="uid://d13rkv258xbdi" path="res://art/enemyFlyingAlt_2.png" id="3_7347p"]
+[ext_resource type="Texture2D" uid="uid://dg54r6kdrxoy5" path="res://art/enemySwimming_1.png" id="4_su2up"]
+[ext_resource type="Texture2D" uid="uid://brxkydmdc5pe1" path="res://art/enemySwimming_2.png" id="5_s1sjw"]
+[ext_resource type="Texture2D" uid="uid://ddvdghgm6opun" path="res://art/enemyWalking_1.png" id="6_n6cre"]
+[ext_resource type="Texture2D" uid="uid://cb7fsg3u2oy4f" path="res://art/enemyWalking_2.png" id="7_2tyij"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_77u3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fjmph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7347p")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_su2up")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_s1sjw")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_n6cre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2tyij")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s8e7p"]
+radius = 46.335
+height = 92.67
+
+[node name="Mob" type="RigidBody2D"]
+scale = Vector2(0.75, 0.75)
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_m4xyu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_77u3k")
+animation = &"walk"
+frame = 1
+frame_progress = 0.996817
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_s8e7p")
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." groups=["mobs"]]
+metadata/_edit_group_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
