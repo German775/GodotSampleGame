@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://dvl46sehv0l7t"]
+
+[ext_resource type="Texture2D" uid="uid://bxxfwkwhhhd26" path="res://art/BIG_0000_Capa-1.png" id="1_l2f54"]
+[ext_resource type="Script" path="res://Coin.gd" id="1_leyhx"]
+[ext_resource type="Texture2D" uid="uid://cqw5ytg6cgp1v" path="res://art/BIG_0001_Capa-2.png" id="2_e3db8"]
+[ext_resource type="Texture2D" uid="uid://bpoy4b08oe44u" path="res://art/BIG_0002_Capa-3.png" id="3_v2m17"]
+[ext_resource type="Texture2D" uid="uid://c4vtayvvlvr12" path="res://art/BIG_0003_Capa-4.png" id="4_laymk"]
+[ext_resource type="Texture2D" uid="uid://c0hiw6phikj2w" path="res://art/BIG_0004_Capa-5.png" id="5_m2du6"]
+[ext_resource type="Texture2D" uid="uid://wkxg18uo5i1p" path="res://art/BIG_0005_Capa-6.png" id="6_aletd"]
+[ext_resource type="Texture2D" uid="uid://ycgfvaifrg5u" path="res://art/BIG_0006_Capa-7.png" id="7_v7tiq"]
+[ext_resource type="Texture2D" uid="uid://d3cup2eim8snt" path="res://art/BIG_0007_Capa-8.png" id="8_lcloo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_splxe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_l2f54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_e3db8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v2m17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_laymk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m2du6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aletd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_v7tiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_lcloo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tx2se"]
+radius = 40.0
+
+[node name="Coin" type="Area2D" groups=["coins"]]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_leyhx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_splxe")
+animation = &"idle"
+frame_progress = 0.0338341
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tx2se")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

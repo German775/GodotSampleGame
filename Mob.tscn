@@ -48,7 +48,7 @@ animations = [{
 radius = 46.335
 height = 92.67
 
-[node name="Mob" type="RigidBody2D"]
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
 scale = Vector2(0.75, 0.75)
 collision_mask = 0
 gravity_scale = 0.0
@@ -66,7 +66,7 @@ metadata/_edit_group_ = true
 shape = SubResource("CapsuleShape2D_s8e7p")
 metadata/_edit_group_ = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." groups=["mobs"]]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 metadata/_edit_group_ = true
 
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

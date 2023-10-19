@@ -1,11 +1,15 @@
 extends Node
 
 @export var mob_scene: PackedScene
-var score
+@export var coin_scene: PackedScene
+
+var timeScore = 0
+var coinScore = 0
+var screen_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	screen_size = get_viewport().size
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -13,23 +17,30 @@ func _process(delta):
 
 func _on_player_hit():
 	$ScoreTimer.stop()
+	$CoinTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
 	$Music.stop()
 	$DeathSound.play()
-	
+
+func picked_up_coin(value):
+	coinScore += value
+	$HUD.update_coin_score(coinScore)
+
 func new_game():
-	score = 0
-	$HUD.update_score(score)
+	timeScore = 0
+	$HUD.update_time_score(timeScore)
 	$HUD.show_message("Get Ready")
 	get_tree().call_group("mobs", "queue_free")
+	get_tree().call_group("coins", "queue_free")
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$Music.play()
+	$CoinTimer.start()
 
 func _on_score_timer_timeout():
-	score += 1
-	$HUD.update_score(score)
+	timeScore += 1
+	$HUD.update_time_score(timeScore)
 
 func _on_start_timer_timeout():
 	$MobTimer.start()
@@ -55,3 +66,11 @@ func _on_mob_timer_timeout():
 
 func _on_hud_start_game():
 	new_game()
+
+func _on_coin_timer_timeout():
+	var rndX = randf_range(0, screen_size.x)
+	var rndY = randf_range(0, screen_size.y)
+	var coin = coin_scene.instantiate()
+	coin.position = Vector2(rndX, rndY)
+	coin.picked_up_coin.connect(picked_up_coin)
+	add_child(coin)
